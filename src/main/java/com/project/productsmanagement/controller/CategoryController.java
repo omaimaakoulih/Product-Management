@@ -43,4 +43,10 @@ public class CategoryController {
         Optional<Category> categoryOptional = categoryDao.getCategoryByCode(code);
         return categoryOptional.map(category -> ResponseEntity.status(HttpStatus.OK).body(category)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCategory(@PathVariable Long id){
+        categoryDao.deleteCategory(id);
+        return ResponseEntity.status(HttpStatus.OK).body("delete a category");
+    }
 }
