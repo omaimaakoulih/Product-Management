@@ -45,4 +45,9 @@ public class CategoryDaoImpl implements CategoryDao{
     public void deleteCategoryByCode(String code) {
         categoryRepository.deleteByCode(code);
     }
+
+    @Override
+    public void updateCategory(Category category) {
+        categoryRepository.save(category);
+    }
 }

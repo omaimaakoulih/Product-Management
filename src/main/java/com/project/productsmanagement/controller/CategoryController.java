@@ -3,12 +3,12 @@ package com.project.productsmanagement.controller;
 import com.project.productsmanagement.dao.CategoryDaoImpl;
 import com.project.productsmanagement.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/category")
@@ -30,5 +30,17 @@ public class CategoryController {
     public ResponseEntity<List<Category>> getAllCategories(){
         List<Category> categories = categoryDao.getAllCategories();
         return ResponseEntity.status(HttpStatus.OK).body(categories);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable Long id){
+        Optional<Category> categoryOptional = categoryDao.getCategoryById(id);
+        return categoryOptional.map(category -> ResponseEntity.status(HttpStatus.OK).body(category)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
+    }
+
+    @GetMapping("/code/{code}")
+    public ResponseEntity<Category> getCategoryByCode(@PathVariable String code){
+        Optional<Category> categoryOptional = categoryDao.getCategoryByCode(code);
+        return categoryOptional.map(category -> ResponseEntity.status(HttpStatus.OK).body(category)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
     }
 }

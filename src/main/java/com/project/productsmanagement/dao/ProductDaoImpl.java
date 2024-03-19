@@ -1,5 +1,6 @@
 package com.project.productsmanagement.dao;
 
+import com.project.productsmanagement.model.Category;
 import com.project.productsmanagement.model.Product;
 import com.project.productsmanagement.repository.ProductRepository;
 import jakarta.validation.ConstraintViolationException;
@@ -16,6 +17,8 @@ public class ProductDaoImpl implements ProductDao{
 
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    CategoryDaoImpl categoryDao;
     @Override
     public void addProduct(Product product) throws DataIntegrityViolationException, ConstraintViolationException {
         productRepository.save(product);
@@ -49,13 +52,20 @@ public class ProductDaoImpl implements ProductDao{
 
     @Override
     public void addProductToCategory(Long productId, String categoryCode) {
-        Optional<Product> productOptional = getProductById(productId);
 
-        if(productOptional.isPresent()){
+        Optional<Product> productOptional = getProductById(productId);
+        Optional<Category> categoryOptional = categoryDao.getCategoryByCode(categoryCode);
+
+        if(productOptional.isPresent() && categoryOptional.isPresent()){
             Product product = productOptional.get();
             product.setCategoryCode(categoryCode);
-            productRepository.save(product);
+            updateProduct(product);
         }
 
+    }
+
+    @Override
+    public void updateProduct(Product product){
+        productRepository.save(product);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/product")
@@ -32,5 +33,17 @@ public class ProductController {
     public ResponseEntity<List<Product>> getAllProducts(){
         List<Product> products = productDao.getAllProducts();
         return ResponseEntity.status(HttpStatus.OK).body(products);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id){
+        Optional<Product> productOptional = productDao.getProductById(id);
+        return productOptional.map(product -> ResponseEntity.status(HttpStatus.OK).body(product)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
+    }
+
+    @GetMapping("/code/{code}")
+    public ResponseEntity<Product> getProductByCode(@PathVariable String code){
+        Optional<Product> productOptional = productDao.getProductByCode(code);
+        return productOptional.map(product -> ResponseEntity.status(HttpStatus.OK).body(product)).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
     }
 }

@@ -15,4 +15,6 @@ public interface CategoryDao {
     public List<Category> getAllCategories();
     public void deleteCategory(Long id);
     public void deleteCategoryByCode(String code);
+    public void updateCategory(Category category);
+
 }

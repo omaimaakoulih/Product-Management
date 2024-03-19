@@ -16,4 +16,5 @@ public interface ProductDao {
     public void deleteProductById(Long id);
     public void deleteProductByCode(String code);
     public void addProductToCategory(Long productId,String categoryCode);
+    public void updateProduct(Product product);
 }
