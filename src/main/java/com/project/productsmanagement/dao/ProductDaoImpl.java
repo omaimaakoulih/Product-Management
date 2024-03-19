@@ -7,7 +7,6 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +18,8 @@ public class ProductDaoImpl implements ProductDao{
     ProductRepository productRepository;
     @Autowired
     CategoryDaoImpl categoryDao;
+
+    private static final int MIN = 0;
     @Override
     public void addProduct(Product product) throws DataIntegrityViolationException, ConstraintViolationException {
         productRepository.save(product);
@@ -65,7 +66,13 @@ public class ProductDaoImpl implements ProductDao{
     }
 
     @Override
-    public void updateProduct(Product product){
+    public void updateProduct(Product product) throws DataIntegrityViolationException, ConstraintViolationException{
+        if(priceIsCorrect(product.getPrice())){
+            throw new ConstraintViolationException("Product price must be greater than " + MIN, null);
+        }
         productRepository.save(product);
+    }
+    public boolean priceIsCorrect(float price){
+        return price>MIN;
     }
 }

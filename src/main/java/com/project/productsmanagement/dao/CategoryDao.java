@@ -4,6 +4,7 @@ import com.project.productsmanagement.model.Category;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,6 @@ public interface CategoryDao {
     public List<Category> getAllCategories();
     public void deleteCategory(Long id);
     public void deleteCategoryByCode(String code);
-    public void updateCategory(Category category);
+    public void updateCategory(Category category) throws DataIntegrityViolationException, ConstraintViolationException;
 
 }

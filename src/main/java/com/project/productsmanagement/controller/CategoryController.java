@@ -2,7 +2,9 @@ package com.project.productsmanagement.controller;
 
 import com.project.productsmanagement.dao.CategoryDaoImpl;
 import com.project.productsmanagement.model.Category;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +50,16 @@ public class CategoryController {
     public ResponseEntity<String> deleteCategory(@PathVariable Long id){
         categoryDao.deleteCategory(id);
         return ResponseEntity.status(HttpStatus.OK).body("delete a category");
+    }
+
+    @PutMapping
+    public ResponseEntity<String> updateCategory(@RequestBody Category category){
+        try{
+            categoryDao.updateCategory(category);
+        }catch (DataIntegrityViolationException exception){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The Category code should be unique");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("category Updated!");
+
     }
 }

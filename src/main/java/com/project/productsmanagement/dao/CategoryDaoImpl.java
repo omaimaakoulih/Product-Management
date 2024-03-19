@@ -47,7 +47,7 @@ public class CategoryDaoImpl implements CategoryDao{
     }
 
     @Override
-    public void updateCategory(Category category) {
+    public void updateCategory(Category category) throws DataIntegrityViolationException, ConstraintViolationException{
         categoryRepository.save(category);
     }
 }
