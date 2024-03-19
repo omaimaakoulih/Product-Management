@@ -26,4 +26,11 @@ public class Product {
     private float price;
 
     private String categoryCode;
+
+    public Product(Long id, String code, String libelli, float price) {
+        this.id = id;
+        this.code = code;
+        this.libelli = libelli;
+        this.price = price;
+    }
 }

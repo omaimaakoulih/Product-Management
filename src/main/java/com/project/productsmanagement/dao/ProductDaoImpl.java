@@ -3,6 +3,7 @@ package com.project.productsmanagement.dao;
 import com.project.productsmanagement.model.Product;
 import com.project.productsmanagement.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class ProductDaoImpl implements ProductDao{
     @Autowired
     ProductRepository productRepository;
     @Override
-    public void addProduct(Product product) {
+    public void addProduct(Product product) throws DataIntegrityViolationException {
         productRepository.save(product);
     }
 
