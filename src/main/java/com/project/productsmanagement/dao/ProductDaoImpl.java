@@ -20,7 +20,7 @@ public class ProductDaoImpl implements ProductDao{
     @Autowired
     CategoryDaoImpl categoryDao;
 
-    private static final int MIN = 0;
+
     @Override
     public void addProduct(Product product) throws DataIntegrityViolationException, ConstraintViolationException {
         productRepository.save(product);
@@ -73,11 +73,11 @@ public class ProductDaoImpl implements ProductDao{
     @Override
     public void updateProduct(Product product) throws DataIntegrityViolationException, ConstraintViolationException{
         if(!priceIsCorrect(product.getPrice())){
-            throw new ConstraintViolationException("Product price must be greater than " + MIN, null);
+            throw new ConstraintViolationException("Product price must be greater than " + Product.MIN, null);
         }
         productRepository.save(product);
     }
     public boolean priceIsCorrect(float price){
-        return price>MIN;
+        return price>Product.MIN;
     }
 }

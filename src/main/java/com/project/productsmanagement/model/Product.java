@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class Product {
 
+    public static final int MIN = 0;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -22,9 +24,9 @@ public class Product {
 
     private String libelli;
 
-    @Min(value = 0, message = "Price should be >0")
+    @Min(value = MIN, message = "Price should be >0")
     private float price;
-
+    // Many to One relation
     private String categoryCode;
 
     public Product( String code, String libelli, float price) {
