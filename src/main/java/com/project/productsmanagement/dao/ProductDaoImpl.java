@@ -3,6 +3,7 @@ package com.project.productsmanagement.dao;
 import com.project.productsmanagement.model.Category;
 import com.project.productsmanagement.model.Product;
 import com.project.productsmanagement.repository.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -60,14 +61,18 @@ public class ProductDaoImpl implements ProductDao{
         if(productOptional.isPresent() && categoryOptional.isPresent()){
             Product product = productOptional.get();
             product.setCategoryCode(categoryCode);
+            System.out.println(product);
             updateProduct(product);
+        }
+        else{
+            throw new EntityNotFoundException();
         }
 
     }
 
     @Override
     public void updateProduct(Product product) throws DataIntegrityViolationException, ConstraintViolationException{
-        if(priceIsCorrect(product.getPrice())){
+        if(!priceIsCorrect(product.getPrice())){
             throw new ConstraintViolationException("Product price must be greater than " + MIN, null);
         }
         productRepository.save(product);

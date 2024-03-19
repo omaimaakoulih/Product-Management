@@ -2,6 +2,7 @@ package com.project.productsmanagement.controller;
 
 import com.project.productsmanagement.dao.ProductDaoImpl;
 import com.project.productsmanagement.model.Product;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -63,5 +64,14 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The price should be >0 ");
         }
         return ResponseEntity.status(HttpStatus.OK).body("product Updated!");
+    }
+    @PutMapping("/{id}/{categoryCode}")
+    public ResponseEntity<String> addCategoryToProduct(@PathVariable Long id, @PathVariable String categoryCode){
+        try{
+            productDao.addProductToCategory(id,categoryCode);
+        }catch(EntityNotFoundException exception){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cannot add product to category");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("product added to category!");
     }
 }
