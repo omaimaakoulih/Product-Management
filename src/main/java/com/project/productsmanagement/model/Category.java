@@ -19,4 +19,9 @@ public class Category {
     private String code;
 
     private String libelli;
+
+    public Category(String code, String libelli) {
+        this.code = code;
+        this.libelli = libelli;
+    }
 }

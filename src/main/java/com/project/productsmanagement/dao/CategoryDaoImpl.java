@@ -2,6 +2,7 @@ package com.project.productsmanagement.dao;
 
 import com.project.productsmanagement.model.Category;
 import com.project.productsmanagement.repository.CategoryRepository;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class CategoryDaoImpl implements CategoryDao{
     @Autowired
     CategoryRepository categoryRepository;
     @Override
-    public void addCategory(Category category) throws DataIntegrityViolationException {
+    public void addCategory(Category category) throws DataIntegrityViolationException, ConstraintViolationException {
         categoryRepository.save(category);
     }
 

@@ -27,8 +27,7 @@ public class Product {
 
     private String categoryCode;
 
-    public Product(Long id, String code, String libelli, float price) {
-        this.id = id;
+    public Product( String code, String libelli, float price) {
         this.code = code;
         this.libelli = libelli;
         this.price = price;
